@@ -1,4 +1,14 @@
 import type { Metadata } from "next";
+import ScrollToTop from "@/components/ScrollToTop";
+import Resume from "@/components/sections/Resume";
+import About from "@/components/sections/About";
+import Skills from "@/components/sections/Skills";
+import Experience from "@/components/sections/Experience";
+import EducationSection from "@/components/sections/Education";
+import Projects from "@/components/sections/Project";
+import Blog from "@/components/sections/Blog";
+import Contact from "@/components/sections/Contact";
+import Footer from "@/components/sections/Footer";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -28,6 +38,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+
+        <ScrollToTop />
+        <Resume />
+        <About />
+        <Skills />
+        <Experience />
+        <EducationSection />
+        <Projects />
+        <Contact />
+        <Blog />
+        <Footer />
+
       </body>
     </html>
   );

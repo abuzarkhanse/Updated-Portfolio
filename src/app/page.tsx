@@ -1,103 +1,145 @@
-import Image from "next/image";
+'use client'
+import { motion } from 'framer-motion'
+import { TypeAnimation } from 'react-type-animation'
+import Image from 'next/image'
+import { useState } from 'react'
+import heroImage from '@/assets/me.jpg'
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [menuOpen, setMenuOpen] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  return (
+    <section
+      id="Home"
+      className="relative flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden px-4 md:px-30"
+    >
+      {/* Navbar */}
+      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 sm:px-10 py-4 bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-lg">
+        <div className="text-2xl font-bold text-neon-purple tracking-wide cursor-pointer">Abuzar Khan</div>
+        
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex space-x-6 text-white/80">
+          {['Home','about','projects','experience','education','blog','contact'].map((id) => (
+            <li
+              key={id}
+              className="hover:text-neon-cyan hover:scale-110 transition-all duration-300 cursor-pointer"
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              {id.charAt(0).toUpperCase() + id.slice(1)}
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden p-2 rounded bg-white/10 backdrop-blur-md relative w-10 h-10 flex flex-col justify-center items-center"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <motion.span
+            animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="block w-6 h-0.5 bg-white rounded"
+          />
+          <motion.span
+            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.2 }}
+            className="block w-6 h-0.5 bg-white rounded my-1"
+          />
+          <motion.span
+            animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="block w-6 h-0.5 bg-white rounded"
+          />
+        </button>
+      </nav>
+
+      {/* Mobile Menu Overlay */}
+      {menuOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 bg-black/70 backdrop-blur-md flex flex-col justify-center items-center space-y-8 z-40 md:hidden"
+        >
+          {['Home','about','projects','experience','education','blog','contact'].map((id) => (
+            <motion.li
+              key={id}
+              whileHover={{ scale: 1.1, color: "#00ffff" }}
+              className="text-2xl text-white/90 cursor-pointer list-none"
+              onClick={() => {
+                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+                setMenuOpen(false)
+              }}
+            >
+              {id.charAt(0).toUpperCase() + id.slice(1)}
+            </motion.li>
+          ))}
+        </motion.div>
+      )}
+
+      {/* Hero Section */}
+      <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-6xl min-h-screen gap-10 px-6 sm:px-10">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+          className="md:w-1/2 text-center md:text-left"
+        >
+          <h1 className="text-5xl sm:text-6xl font-bold text-neon-purple tracking-wide mb-4 drop-shadow-neon">
+            <TypeAnimation
+              sequence={[
+                "Hi, I'm Abuzar",
+                2000,
+                "I'm a Software Engineer",
+                2000,
+                "I Build Futuristic Web Apps",
+                2000,
+                "With React & Next.js",
+                2000,
+              ]}
+              wrapper="span"
+              speed={25}
+              repeat={Infinity}
+              cursor={true}
+              className="inline-block"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </h1>
+
+          <p className="text-lg sm:text-xl text-neon-cyan mb-6 leading-relaxed">
+            Final year Software Engineering student building futuristic web experiences in
+            <span className="text-white font-semibold"> MERN-Stack with Next.js and animations</span>.
+            <br />
+            Passionate about building futuristic software solutions that merge creativity with cutting-edge technology.
+          </p>
+
+          <motion.a
+            href="#about"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block bg-neon-purple text-black px-6 py-3 rounded-full font-semibold shadow-neon hover:shadow-lg transition-all duration-300"
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+            Explore
+          </motion.a>
+        </motion.div>
+
+        {/* Hero Image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2 }}
+          className="md:w-1/2 flex justify-center md:justify-end"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+          <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-neon-purple shadow-2xl shadow-neon">
+            <Image
+              src={heroImage}
+              alt="Abuzar Khan"
+              className="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
+              priority
+            />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-t from-neon-purple/40 to-neon-cyan/40 animate-pulse"></div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
 }
