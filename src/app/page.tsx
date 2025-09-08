@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <section
       id="Home"
-      className="relative flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden px-4 md:px-30"
+      className="relative flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden px-4 md:px-30 pt-24"
     >
       {/* Navbar */}
       <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 sm:px-10 py-4 bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-lg">
