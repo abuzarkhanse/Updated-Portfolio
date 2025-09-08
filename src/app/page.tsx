@@ -32,7 +32,7 @@ export default function Home() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2 rounded bg-white/10 backdrop-blur-md relative w-10 h-10 flex flex-col justify-center items-center"
+          className="md:hidden p-2 rounded relative w-10 h-10 flex flex-col justify-center items-center"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <motion.span
