@@ -22,7 +22,8 @@ export default function Blog() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="text-3xl font-bold text-center sm:text-4xl mb-12"
+        className="text-3xl font-bold text-center sm:text-4xl mb-12 
+                   text-gray-900 dark:text-white"
       >
         Articles & Blogs
       </motion.h2>
@@ -44,7 +45,10 @@ export default function Blog() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: idx * 0.1 }}
             viewport={{ once: true }}
-            className="group glass rounded-2xl overflow-hidden shadow-glass hover:shadow-neon-purple transition transform hover:-translate-y-2 flex flex-col"
+            className="group glass rounded-2xl overflow-hidden 
+                       bg-white dark:bg-gray-900 
+                       shadow-glass hover:shadow-neon-purple 
+                       transition transform hover:-translate-y-2 flex flex-col"
           >
             {/* Image */}
             <div className="h-48 overflow-hidden rounded-t-2xl relative">
@@ -58,12 +62,12 @@ export default function Blog() {
 
             {/* Content */}
             <div className="p-6 flex-1 flex flex-col">
-              <div className="text-sm text-zinc-400">{post.date}</div>
-              <h3 className="mt-2 text-lg font-semibold text-white group-hover:text-purple-400">
+              <div className="text-sm text-gray-600 dark:text-zinc-400">{post.date}</div>
+              <h3 className="mt-2 text-lg font-semibold text-gray-900 dark:text-white group-hover:text-purple-400">
                 {post.title}
               </h3>
-              <p className="mt-2 text-sm text-zinc-300 flex-1">{post.excerpt}</p>
-              <div className="mt-4 text-purple-400 text-sm font-medium group-hover:underline">
+              <p className="mt-2 text-sm text-gray-700 dark:text-zinc-300 flex-1">{post.excerpt}</p>
+              <div className="mt-4 text-purple-600 dark:text-purple-400 text-sm font-medium group-hover:underline">
                 Read More →
               </div>
             </div>
