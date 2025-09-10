@@ -64,7 +64,7 @@ export default function Skills() {
               {skill.items.map((item) => (
                 <li
                   key={item}
-                  className="text-sm px-3 py-1 bg-white/5 rounded-lg border border-white/10 hover:bg-purple-500/20 hover:text-white transition-colors"
+                  className="text-xs px-2 py-1 rounded-lg bg-white/5 text-zinc-400 border border-white/10 hover:bg-purple-500/10 hover:text-white transition-colors"
                 >
                   {item}
                 </li>
