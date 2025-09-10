@@ -2,56 +2,109 @@
 import { motion } from 'framer-motion'
 import { TypeAnimation } from 'react-type-animation'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import heroImage from '@/assets/me.jpg'
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [showNav, setShowNav] = useState(false)
+
+  // detect scroll past hero
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowNav(window.scrollY > window.innerHeight * 0.7)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <section
       id="Home"
       className="relative flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden px-4 md:px-30 pt-24"
     >
-      {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 sm:px-10 py-4 bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-lg">
-        <div className="text-2xl font-bold text-neon-purple tracking-wide cursor-pointer">Abuzar Khan</div>
-        
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-6 text-white/80">
-          {['Home','about','projects','experience','education','blog','contact'].map((id) => (
-            <li
-              key={id}
-              className="hover:text-neon-cyan hover:scale-110 transition-all duration-300 cursor-pointer"
-              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              {id.charAt(0).toUpperCase() + id.slice(1)}
-            </li>
-          ))}
-        </ul>
+      {/* Floating Nav (appears after scroll) */}
+      {showNav && (
+        <motion.nav
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+          className="
+            fixed top-4 left-1/2 -translate-x-1/2 z-50 
+            flex items-center justify-between
+            px-6 py-3
+            bg-black/40 backdrop-blur-xl
+            rounded-full shadow-lg border border-white/10 w-[90%] md:w-auto"
+        >
+          {/* Logo */}
+          <div className="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple cursor-pointer">
+            Abuzar Khan
+          </div>
 
-        {/* Mobile Toggle */}
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex space-x-8">
+            {['Home','about','projects','experience','education','blog','contact'].map((id) => (
+              <li
+                key={id}
+                className="relative group cursor-pointer text-white/80 font-medium tracking-wide"
+                onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                {id.charAt(0).toUpperCase() + id.slice(1)}
+                <span className="
+                  absolute left-0 bottom-0 w-0 h-[2px]
+                  bg-gradient-to-r from-neon-cyan to-neon-purple
+                  transition-all duration-300 group-hover:w-full"></span>
+              </li>
+            ))}
+          </ul>
+
+          {/* Mobile Toggle */}
+          <button
+            className="md:hidden p-2 rounded-full border border-white/20 hover:border-neon-cyan transition-all relative w-12 h-12 flex flex-col justify-center items-center bg-black/20 backdrop-blur-sm"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            <motion.span
+              animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="block w-7 h-0.5 bg-white rounded"
+            />
+            <motion.span
+              animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+              transition={{ duration: 0.2 }}
+              className="block w-7 h-0.5 bg-white rounded my-1"
+            />
+            <motion.span
+              animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="block w-7 h-0.5 bg-white rounded"
+            />
+          </button>
+        </motion.nav>
+      )}
+
+      {/* Single toggle button at top (when hero visible) */}
+      {!showNav && (
         <button
-          className="md:hidden p-2 rounded relative w-10 h-10 flex flex-col justify-center items-center"
+          className="fixed top-4 right-4 md:hidden p-2 rounded-full border border-white/20 hover:border-neon-cyan transition-all w-12 h-12 flex flex-col justify-center items-center bg-black/20 backdrop-blur-sm z-50"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <motion.span
             animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="block w-6 h-0.5 bg-white rounded"
+            className="block w-7 h-0.5 bg-white rounded"
           />
           <motion.span
             animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
             transition={{ duration: 0.2 }}
-            className="block w-6 h-0.5 bg-white rounded my-1"
+            className="block w-7 h-0.5 bg-white rounded my-1"
           />
           <motion.span
             animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="block w-6 h-0.5 bg-white rounded"
+            className="block w-7 h-0.5 bg-white rounded"
           />
         </button>
-      </nav>
+      )}
 
       {/* Mobile Menu Overlay */}
       {menuOpen && (
@@ -59,13 +112,16 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/70 backdrop-blur-md flex flex-col justify-center items-center space-y-8 z-40 md:hidden"
+          className="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col justify-center items-center space-y-10 z-40 md:hidden"
         >
-          {['Home','about','projects','experience','education','blog','contact'].map((id) => (
+          {['Home','about','projects','experience','education','blog','contact'].map((id, index) => (
             <motion.li
               key={id}
-              whileHover={{ scale: 1.1, color: "#00ffff" }}
-              className="text-2xl text-white/90 cursor-pointer list-none"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.1, color: '#00ffff' }}
+              className="text-3xl text-white font-semibold tracking-wide cursor-pointer list-none"
               onClick={() => {
                 document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
                 setMenuOpen(false)
