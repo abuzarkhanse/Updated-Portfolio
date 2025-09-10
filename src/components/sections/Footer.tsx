@@ -4,7 +4,7 @@ import { Github, Linkedin, Mail } from 'lucide-react'
 
 export default function Footer() {
   return (
-    <footer className="relative w-full mt-20 bg-gradient-to-br from-black via-gray-900 to-black border-t border-purple-500/30 rounded-t-[3rem] overflow-hidden">
+    <footer className="relative w-full bg-gradient-to-br from-black via-gray-900 to-black border-t border-purple-500/30 rounded-t-[3rem] overflow-hidden">
       {/* animated glow */}
       <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top_left,_#7c3aed_0%,_transparent_70%)] animate-pulse" />
 
