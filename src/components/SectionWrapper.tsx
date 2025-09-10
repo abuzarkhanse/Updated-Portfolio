@@ -9,7 +9,11 @@ interface SectionWrapperProps {
 
 export default function SectionWrapper({ children, id, title }: SectionWrapperProps) {
   return (
-    <section id={id} className="py-24 relative">
+    <section
+      id={id}
+      // force dark background & white text everywhere
+      className="py-24 relative bg-black text-white"
+    >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-20">
         {title && (
           <h2 className="text-3xl sm:text-4xl font-bold text-center text-white mb-12">
