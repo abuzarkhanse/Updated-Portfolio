@@ -92,7 +92,7 @@ export default function Home() {
           exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black/90 backdrop-blur-md flex flex-col justify-center items-center space-y-10 z-40 md:hidden"
         >
-          {['Home','about','projects','experience','education','blog','contact'].map((id, index) => (
+          {['Home','about','projects', 'skills', 'experience','education','blog','contact'].map((id, index) => (
             <motion.li
               key={id}
               initial={{ opacity: 0, y: 30 }}
