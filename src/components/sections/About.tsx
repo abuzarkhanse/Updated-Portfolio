@@ -12,7 +12,7 @@ export default function About() {
         viewport={{ once: true }}
         className="text-3xl font-bold text-center sm:text-4xl mb-10"
       >
-        About Me:
+        About Me
       </motion.h2>
 
       <motion.p

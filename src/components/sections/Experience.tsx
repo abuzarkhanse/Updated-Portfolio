@@ -4,12 +4,6 @@ import SectionWrapper from '../SectionWrapper'
 
 const experiences = [
   {
-    title: "Software Engineering Student",
-    company: "PAF-IAST",
-    period: "2022 – Present",
-    desc: "Building strong foundations in software engineering while specializing in modern web technologies and problem-solving.",
-  },
-  {
     title: "Moderen Web Developer",
     company: "TechTribe",
     period: "Summer 2025",
