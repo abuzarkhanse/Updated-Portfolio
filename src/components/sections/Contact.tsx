@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin } from 'lucide-react'
 import SectionWrapper from '../SectionWrapper'
+import { bdi } from 'framer-motion/client'
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -96,7 +97,7 @@ export default function Contact() {
           </motion.button>
           {status && <p className="text-sm text-center mt-2">{status}</p>}
         </motion.form>
-
+        
         {/* Contact Info */}
         <motion.div
           initial={{ opacity: 0, x: 40 }}

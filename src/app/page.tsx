@@ -9,7 +9,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [showNav, setShowNav] = useState(false)
 
-  // detect scroll past hero
+  // detect scroll past hero for desktop nav only
   useEffect(() => {
     const handleScroll = () => {
       setShowNav(window.scrollY > window.innerHeight * 0.7)
@@ -23,30 +23,32 @@ export default function Home() {
       id="Home"
       className="relative flex flex-col justify-center items-center min-h-screen bg-gradient-to-b from-gray-900 to-black text-white overflow-hidden px-4 md:px-30 pt-24"
     >
-      {/* Floating Nav (appears after scroll) */}
+      {/* ================= DESKTOP NAV ================= */}
       {showNav && (
         <motion.nav
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
           className="
+            hidden md:flex   /* 🔥 only desktop */
             fixed top-4 left-1/2 -translate-x-1/2 z-50 
-            flex items-center justify-between
-            px-6 py-3
-            bg-black/40 backdrop-blur-xl
-            rounded-full shadow-lg border border-white/10 w-[90%] md:w-auto"
+            items-center justify-between
+            px-4 py-2
+            bg-black/50 backdrop-blur-xl
+            rounded-full shadow-lg border border-white/10
+            w-auto max-w-[70%]"
         >
           {/* Logo */}
-          <div className="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple cursor-pointer">
+          <div className="text-lg font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-purple cursor-pointer whitespace-nowrap">
             Abuzar Khan
           </div>
 
-          {/* Desktop Menu */}
-          <ul className="hidden md:flex space-x-8">
-            {['Home','about','projects','experience','education','blog','contact'].map((id) => (
+          {/* Desktop Links */}
+          <ul className="flex space-x-6">
+            {['Home','about','projects', 'skills', 'experience','education','blog','contact'].map((id) => (
               <li
                 key={id}
-                className="relative group cursor-pointer text-white/80 font-medium tracking-wide"
+                className="relative group cursor-pointer text-white/70 font-medium text-sm tracking-wide hover:text-white"
                 onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
               >
                 {id.charAt(0).toUpperCase() + id.slice(1)}
@@ -57,56 +59,32 @@ export default function Home() {
               </li>
             ))}
           </ul>
-
-          {/* Mobile Toggle */}
-          <button
-            className="md:hidden p-2 rounded-full border border-white/20 hover:border-neon-cyan transition-all relative w-12 h-12 flex flex-col justify-center items-center bg-black/20 backdrop-blur-sm"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            <motion.span
-              animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="block w-7 h-0.5 bg-white rounded"
-            />
-            <motion.span
-              animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-              transition={{ duration: 0.2 }}
-              className="block w-7 h-0.5 bg-white rounded my-1"
-            />
-            <motion.span
-              animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="block w-7 h-0.5 bg-white rounded"
-            />
-          </button>
         </motion.nav>
       )}
 
-      {/* Single toggle button at top (when hero visible) */}
-      {!showNav && (
-        <button
-          className="fixed top-4 right-4 md:hidden p-2 rounded-full border border-white/20 hover:border-neon-cyan transition-all w-12 h-12 flex flex-col justify-center items-center bg-black/20 backdrop-blur-sm z-50"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <motion.span
-            animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="block w-7 h-0.5 bg-white rounded"
-          />
-          <motion.span
-            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.2 }}
-            className="block w-7 h-0.5 bg-white rounded my-1"
-          />
-          <motion.span
-            animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="block w-7 h-0.5 bg-white rounded"
-          />
-        </button>
-      )}
+      {/* ================= MOBILE HAMBURGER BTN ================= */}
+      <button
+        className="fixed top-4 right-4 md:hidden p-2 rounded-full border border-white/20 hover:border-neon-cyan transition-all w-10 h-10 flex flex-col justify-center items-center bg-black/30 backdrop-blur-sm z-50"
+        onClick={() => setMenuOpen(!menuOpen)}
+      >
+        <motion.span
+          animate={menuOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="block w-6 h-0.5 bg-white rounded"
+        />
+        <motion.span
+          animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+          transition={{ duration: 0.2 }}
+          className="block w-6 h-0.5 bg-white rounded my-1"
+        />
+        <motion.span
+          animate={menuOpen ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="block w-6 h-0.5 bg-white rounded"
+        />
+      </button>
 
-      {/* Mobile Menu Overlay */}
+      {/* ================= MOBILE OVERLAY MENU ================= */}
       {menuOpen && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -133,7 +111,7 @@ export default function Home() {
         </motion.div>
       )}
 
-      {/* Hero Section */}
+      {/* ================= HERO ================= */}
       <div className="relative flex flex-col md:flex-row items-center justify-center w-full max-w-6xl min-h-screen gap-10 px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
